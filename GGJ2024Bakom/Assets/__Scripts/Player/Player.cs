@@ -7,11 +7,7 @@ public class Player : MonoBehaviour
 {
     //player movement
     private CharacterController characterController;
-    private Vector3 playerVelocity;
     private float playerSpeed = 5.0f;
-
-    //
-    private Camera mainCamera;
 
     //sounds
     public AudioSource honkClip;
@@ -26,7 +22,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -40,7 +35,7 @@ public class Player : MonoBehaviour
     private void PlayerMovement()
     {
         //movement
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         characterController.Move(move * Time.deltaTime * playerSpeed);
 
         //running
@@ -48,8 +43,6 @@ public class Player : MonoBehaviour
         {
             playerSpeed = 10f;
         }
-
-        //rotation
     }
 
     private void ThrowPie()
