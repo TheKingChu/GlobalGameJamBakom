@@ -53,6 +53,10 @@ namespace __Scripts.Player
             //rotation
             float turn = Input.GetAxis("Mouse X");
             transform.Rotate(0, turn, 0);
+            
+            //vertical movement
+            float verticalMove = Input.GetAxis("Mouse Y");
+            transform.Rotate(-verticalMove, 0, 0);
         }
 
         private void ThrowPie()
