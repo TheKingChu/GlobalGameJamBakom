@@ -1,72 +1,76 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace __Scripts.Player
 {
-    //player movement
-    private CharacterController characterController;
-    private Vector3 playerVelocity;
-    private float playerSpeed = 5.0f;
-
-    //
-    private Camera mainCamera;
-
-    //sounds
-    public AudioSource honkClip;
-
-    //pie
-    public GameObject piePrefab;
-    private bool hasPie;
-
-    //animation
-
-    // Start is called before the first frame update
-    void Start()
+    public class Player : MonoBehaviour
     {
-        characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
-    }
+        //player movement
+        private CharacterController characterController;
+        private Vector3 playerVelocity;
+        private float playerSpeed = 5.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        PlayerMovement();
-        Honk();
-        ThrowPie();
-    }
+        //
+        private Camera mainCamera;
 
-    private void PlayerMovement()
-    {
-        //movement
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        characterController.Move(move * Time.deltaTime * playerSpeed);
+        //sounds
+        public AudioSource honkClip;
 
-        //running
-        if (Input.GetKey(KeyCode.LeftShift))
+        //pie
+        public GameObject piePrefab;
+        private bool hasPie;
+
+        //animation
+
+        // Start is called before the first frame update
+        void Start()
         {
-            playerSpeed = 10f;
+            characterController = GetComponent<CharacterController>();
+            mainCamera = Camera.main;
         }
 
-        //rotation
-    }
-
-    private void ThrowPie()
-    {
-        if (Input.GetMouseButton(0) && !hasPie)
+        // Update is called once per frame
+        void Update()
         {
-            Instantiate(piePrefab);
-            hasPie = true;
+            PlayerMovement();
+            Honk();
+            ThrowPie();
         }
-    }
 
-    public void Honk()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
+        private void PlayerMovement()
         {
-            Debug.Log("HONK");
-            honkClip.Play();
+            //movement
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            characterController.Move(move * (Time.deltaTime * playerSpeed));
+
+            //running
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                playerSpeed = 10f;
+            }
+            
+
+
+            //rotation
+            float turn = Input.GetAxis("Mouse X");
+            transform.Rotate(0, turn, 0);
+        }
+
+        private void ThrowPie()
+        {
+            if (Input.GetMouseButton(0) && !hasPie)
+            {
+                Instantiate(piePrefab);
+                hasPie = true;
+            }
+        }
+
+        public void Honk()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("HONK");
+                honkClip.Play();
+            }
         }
     }
 }
