@@ -1232,6 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   honkClip: {fileID: 1939189942}
+  piePrefab: {fileID: 3853625568302121619, guid: d6f8ce23dd271a04ea3dc3a965cc1e70, type: 3}
 --- !u!82 &1939189942
 AudioSource:
   m_ObjectHideFlags: 0

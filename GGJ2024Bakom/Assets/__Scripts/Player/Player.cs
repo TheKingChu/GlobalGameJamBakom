@@ -5,12 +5,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //player movement
     private CharacterController characterController;
     private Vector3 playerVelocity;
     private float playerSpeed = 5.0f;
+
+    //
     private Camera mainCamera;
 
+    //sounds
     public AudioSource honkClip;
+
+    //pie
+    public GameObject piePrefab;
+    private bool hasPie;
+
+    //animation
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +48,16 @@ public class Player : MonoBehaviour
         {
             playerSpeed = 10f;
         }
+
+        //rotation
     }
 
     private void ThrowPie()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !hasPie)
         {
-
+            Instantiate(piePrefab);
+            hasPie = true;
         }
     }
 
