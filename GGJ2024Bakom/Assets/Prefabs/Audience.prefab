@@ -150,5 +150,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tomatoPrefab: {fileID: 9096709933268046378, guid: 2dda8caac51732041991d627c28499b7, type: 3}
   points:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8648965620293364565, guid: 3487094b825847a4ab3f6cb9f5aa9acb, type: 3}
+  - {fileID: 5662869100624956563, guid: 2fc50987363ea4d4b933079b4924ebeb, type: 3}

@@ -16,9 +16,19 @@ public class MouseRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MouseMovement();
+    }
+
+    public void MouseMovement()
+    {
         //mouse
         turn.x += Input.GetAxis("Mouse X") * mouseSensitivity;
         turn.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
         transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+    }
+
+    public void StopMouseMovement()
+    {
+
     }
 }

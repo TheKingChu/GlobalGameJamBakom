@@ -22,7 +22,7 @@ public class LaughMeter : MonoBehaviour
             //confetti
             Instantiate(confettiParticles, transform.position, Quaternion.identity);
         }
-        if(laughSlider.value == 1)
+        if(laughSlider.value == 10)
         {
             winPanel.SetActive(true);
             Time.timeScale = 0;
@@ -40,7 +40,7 @@ public class LaughMeter : MonoBehaviour
             //audience starts throwing 
             //audience.ThrowTomato();
         }   
-        if(laughSlider.value == -1)
+        if(laughSlider.value == -10)
         {
             losePanel.SetActive(true);
             Time.timeScale = 0;

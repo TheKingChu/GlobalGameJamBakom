@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public Transform thirdPersonCamera;
     public float transitionSpeed = 5.0f;
     private bool isFirstPerson = false;
+    private MouseRotation mouseRotation;
 
     [Header("Pie variables")]
     public GameObject piePrefab;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        mouseRotation = GetComponentInChildren<MouseRotation>();
     }
 
     // Update is called once per frame
@@ -46,11 +48,6 @@ public class Player : MonoBehaviour
         PlayerMovement();
         Honk();
         ChargePie();
-        // Calculate start velocity based on the player's forward direction and charge time
-        Vector3 startVelocity = transform.forward * (chargeTime / maxChargeTime) * throwSpeed;
-        // Offset the starting position to chest height
-        Vector3 chestHeightStartPosition = transform.position + Vector3.up * chestHeightOffset;
-        VisualizeCharge(chestHeightStartPosition, startVelocity);
         ThrowPie();
     }
 
@@ -89,12 +86,13 @@ public class Player : MonoBehaviour
             isFirstPerson = true;
 
             //move the trajectory random from side to side
-
+            mouseRotation.MouseMovement();
         }
     }
 
     private void ThrowPie()
     {
+        mouseRotation.MouseMovement();
         if (Input.GetMouseButtonUp(0))
         {
             isThrowing = true;
@@ -122,28 +120,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void VisualizeCharge(Vector3 startPoint, Vector3 startVelocity)
-    {
-        // Disable LineRenderer by default
-        lineRenderer.enabled = false;
-
-        // Check if the camera position is close to the first-person camera
-        if (Vector3.Distance(Camera.main.transform.position, firstPersonCamera.position) < 0.01f)
-        {
-            // Enable LineRenderer only when in first-person
-            lineRenderer.enabled = true;
-
-            float timeStep = timeOfFlight / lineSegments;
-            Vector3[] lineRenderPoints = CalculateTrajectory(startPoint, startVelocity, timeStep);
-            lineRenderer.positionCount = lineSegments;
-            lineRenderer.SetPositions(lineRenderPoints);
-
-            // Offset the LineRenderer so that it starts from the player's position
-            lineRenderer.transform.position = startPoint;
-            lineRenderer.transform.rotation = transform.rotation;
-        }
-    }
-
     private void SetCameraState(bool isFirstPerson)
     {
         this.isFirstPerson = isFirstPerson;
@@ -160,24 +136,6 @@ public class Player : MonoBehaviour
             Camera.main.transform.position = thirdPersonCamera.position;
             Camera.main.transform.rotation = thirdPersonCamera.rotation;
         }
-    }
-
-    Vector3[] CalculateTrajectory(Vector3 startPoint, Vector3 startVelocity, float timeStep)
-    {
-        Vector3[] lineRendererPoints = new Vector3[lineSegments];
-
-        for (int i = 0; i < lineSegments; i++)
-        {
-            float t = i / (float)(lineSegments - 1); // Interpolation parameter between 0 and 1
-
-            // Calculate the position based on time and gravity
-            Vector3 currentPosition = startPoint + startVelocity * t * timeOfFlight + 1.5f * Physics.gravity * t * t;
-
-            // Convert the position to local space relative to the startPoint
-            lineRendererPoints[i] = transform.InverseTransformPoint(currentPosition);
-        }
-
-        return lineRendererPoints;
     }
 
     public void Honk()
