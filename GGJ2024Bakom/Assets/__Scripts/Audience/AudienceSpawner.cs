@@ -8,7 +8,7 @@ public class AudienceSpawner : MonoBehaviour
     public Transform spawnLocation;
     public Transform playerTransform;
     private float minDistanceToPlayer = 5.0f;
-    private int numberOfAudienceToSpawn = 10;
+    private int numberOfAudienceToSpawn = 15;
 
     // Start is called before the first frame update
     void Start()
