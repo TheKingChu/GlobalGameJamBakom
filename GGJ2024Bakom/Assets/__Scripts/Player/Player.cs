@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public Transform firstPersonCamera;
     public Transform thirdPersonCamera;
     public float transitionSpeed = 5.0f;
-    private bool isFirstPerson = false;
 
     [Header("Pie variables")]
     public GameObject piePrefab;
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour
     public float chestHeightOffset = 1.3f;
 
     public LineRenderer lineRenderer;
-    [SerializeField, Min(3)] int lineSegments = 60;
+    [SerializeField, Min(3)] int lineSegments = 10;
     [SerializeField, Min(1)] float timeOfFlight = 5f;
 
     //animation
@@ -82,6 +81,7 @@ public class Player : MonoBehaviour
         {
             chargeTime += Time.deltaTime;
             chargeTime = Mathf.Clamp(chargeTime, 0f, maxChargeTime);
+            SetCameraState(true);
         }
     }
 
@@ -97,44 +97,71 @@ public class Player : MonoBehaviour
             Vector3 throwVelocity = throwDirection * throwForce;
 
             pieRb.velocity = throwVelocity;
+
+            pieInstance.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
             
             chargeTime = 0f;
+            SetCameraState(false);
         }
     }
 
     private void VisualizeCharge(Vector3 startPoint, Vector3 startVelocity)
     {
-        float timeStep = timeOfFlight / lineSegments;
-        Vector3[] lineRenderPoints = CalculateTrajectory(startPoint, startVelocity, timeStep);
-        lineRenderer.positionCount = lineSegments;
-        lineRenderer.SetPositions(lineRenderPoints);
+        // Disable LineRenderer by default
+        lineRenderer.enabled = false;
 
-        // Offset the Line Renderer so that it starts from the player's position
-        lineRenderer.transform.position = startPoint;
+        // Check if the camera position is close to the first-person camera
+        if (Vector3.Distance(Camera.main.transform.position, firstPersonCamera.position) < 0.01f)
+        {
+            // Enable LineRenderer only when in first-person
+            lineRenderer.enabled = true;
 
-        // Calculate the transition factor based on charge level
-        float transitionFactor = Mathf.Clamp01(chargeTime / maxChargeTime);
+            float timeStep = timeOfFlight / lineSegments;
+            Vector3[] lineRenderPoints = CalculateTrajectory(startPoint, startVelocity, timeStep);
+            lineRenderer.positionCount = lineSegments;
+            lineRenderer.SetPositions(lineRenderPoints);
 
-        // Lerp between third person and first person camera positions
-        Camera.main.transform.SetPositionAndRotation(Vector3.Lerp(thirdPersonCamera.position, firstPersonCamera.position, transitionFactor), 
-            Quaternion.Lerp(thirdPersonCamera.rotation, firstPersonCamera.rotation, transitionFactor));
+            // Offset the LineRenderer so that it starts from the player's position
+            lineRenderer.transform.position = startPoint;
+            lineRenderer.transform.rotation = transform.rotation;
+        }
+    }
 
-        // Use the first person camera's position and rotation for Line Renderer visualization
-        lineRenderer.transform.SetPositionAndRotation(firstPersonCamera.position, firstPersonCamera.rotation);
+    private void SetCameraState(bool isFirstPerson)
+    {
+        if (isFirstPerson)
+        {
+            // Set first-person camera position and rotation
+            Camera.main.transform.position = firstPersonCamera.position;
+            Camera.main.transform.rotation = firstPersonCamera.rotation;
+
+            // Clamp the vertical rotation to limit looking down
+            float mouseY = -Input.GetAxis("Mouse Y") * mouseSensitivity;
+            float currentXRotation = Camera.main.transform.rotation.eulerAngles.x;
+            float clampedXRotation = Mathf.Clamp(currentXRotation + mouseY, -45f, 45f);
+            Camera.main.transform.rotation = Quaternion.Euler(clampedXRotation, Camera.main.transform.rotation.eulerAngles.y, Camera.main.transform.rotation.eulerAngles.z);
+        }
+        else
+        {
+            // Set third-person camera position and rotation
+            Camera.main.transform.position = thirdPersonCamera.position;
+            Camera.main.transform.rotation = thirdPersonCamera.rotation;
+        }
     }
 
     Vector3[] CalculateTrajectory(Vector3 startPoint, Vector3 startVelocity, float timeStep)
     {
         Vector3[] lineRendererPoints = new Vector3[lineSegments];
-        lineRendererPoints[0] = startPoint;
-        Vector3 currentVelocity = startVelocity;
-        Vector3 currentPosition = startPoint;
 
         for (int i = 0; i < lineSegments; i++)
         {
-            currentVelocity += Physics.gravity * timeStep;
-            currentPosition += currentVelocity * timeStep;
-            lineRendererPoints[i] = currentPosition - startPoint;
+            float t = i / (float)(lineSegments - 1); // Interpolation parameter between 0 and 1
+
+            // Calculate the position based on time and gravity
+            Vector3 currentPosition = startPoint + startVelocity * t * timeOfFlight + 0.5f * Physics.gravity * t * t;
+
+            // Convert the position to local space relative to the startPoint
+            lineRendererPoints[i] = transform.InverseTransformPoint(currentPosition);
         }
 
         return lineRendererPoints;

@@ -7,6 +7,9 @@ TagManager:
   - JokeStart
   - Punchline
   - King
+  - Audience
+  - ground
+  - Pie
   layers:
   - Default
   - TransparentFX

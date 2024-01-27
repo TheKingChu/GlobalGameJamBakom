@@ -35,6 +35,13 @@ public class AudienceSpawner : MonoBehaviour
 
             // Set the parent of the instantiated audience to the spawnLocation
             audienceInstance.transform.parent = spawnLocation;
+
+            // Assign a random color to the audience
+            MeshRenderer audienceRenderer = audienceInstance.GetComponent<MeshRenderer>();
+            if (audienceRenderer != null)
+            {
+                audienceRenderer.material.color = Random.ColorHSV();
+            }
         }
     }
 
