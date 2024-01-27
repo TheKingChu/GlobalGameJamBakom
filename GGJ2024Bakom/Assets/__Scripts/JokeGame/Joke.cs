@@ -24,7 +24,7 @@ public class Joke : MonoBehaviour
         else
         {
             Debug.Log("Bad Joke");
-            jester.maxTime -= jester.timePunish;
+            jester.TimeReduction();
         }
 
         if (criticalHonk)

@@ -72,7 +72,7 @@ public class JokeController : MonoBehaviour
                 Debug.Log("Booo!");
                 if (buildUps.Count > 0)
                 {
-                    maxTime -= timePunish;
+                    TimeReduction();
                     NextJoke();
                 }
                 else
@@ -178,5 +178,10 @@ public class JokeController : MonoBehaviour
         }
         currentTime = maxTime;
         faceColor = colorSave;
+    }
+
+    public void TimeReduction()
+    {
+        maxTime -= timePunish;
     }
 }
