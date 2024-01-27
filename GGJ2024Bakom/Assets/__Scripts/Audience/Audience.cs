@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Audience : MonoBehaviour
 {
+    public GameObject tomatoPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,15 @@ public class Audience : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void AudienceMovement()
+    {
+
+    }
+
+    public void ThrowTomato()
+    {
+
     }
 }

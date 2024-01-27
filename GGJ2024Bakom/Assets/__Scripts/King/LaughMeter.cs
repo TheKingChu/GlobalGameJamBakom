@@ -28,7 +28,8 @@ public class LaughMeter : MonoBehaviour
 
         if(laughSlider.value < 0.5f)
         {
-            //something
+            //audience starts throwing 
+            audience.ThrowTomato();
         }   
     }
 
