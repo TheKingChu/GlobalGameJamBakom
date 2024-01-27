@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
             Vector3 throwDirection = transform.forward;
             Vector3 throwVelocity = throwDirection * throwForce;
 
-            throwVelocity += Vector3.up * 0.5f;
+            throwVelocity += Vector3.up * 1f;
 
             pieRb.velocity = throwVelocity;
 
