@@ -8,6 +8,7 @@ public class LaughMeter : MonoBehaviour
     public Slider laughSlider;
     public float positiveIncrement = 0.5f;
     public float negativeIncrement = 0.5f;
+    private Audience audience;
 
     public void PositiveEvent()
     {
