@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
             Vector3 throwDirection = transform.forward;
             Vector3 throwVelocity = throwDirection * throwForce;
 
-            throwVelocity += Vector3.up * 1f;
+            throwVelocity += Vector3.up * 1f; //throwing the pie upwards
 
             pieRb.velocity = throwVelocity;
 
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
             float t = i / (float)(lineSegments - 1); // Interpolation parameter between 0 and 1
 
             // Calculate the position based on time and gravity
-            Vector3 currentPosition = startPoint + startVelocity * t * timeOfFlight + 0.5f * Physics.gravity * t * t;
+            Vector3 currentPosition = startPoint + startVelocity * t * timeOfFlight + 1.5f * Physics.gravity * t * t;
 
             // Convert the position to local space relative to the startPoint
             lineRendererPoints[i] = transform.InverseTransformPoint(currentPosition);
