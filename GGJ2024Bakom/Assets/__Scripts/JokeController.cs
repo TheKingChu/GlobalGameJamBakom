@@ -14,12 +14,24 @@ public class JokeController : MonoBehaviour
     private int jokeIndex = 0;
     private string punch1, punch2, punch3, punch4;
     private TMP_Text buildTmp, punchTmp1, punchTmp2, punchTmp3, punchTmp4;
-    public Image timeIndicator;
-    private Color timeColor;
+    public GameObject jesterHead;
+    public Material faceMat;
+    //public Image timeIndicator;
+    private Color faceColor;
     // Start is called before the first frame update
     void Start()
     {
-        timeColor = timeIndicator.color;
+        int materialIndex = 0;
+        foreach(Material mat in jesterHead.GetComponent<MeshRenderer>().materials)
+        {
+            if(materialIndex == 1)
+            {
+                faceMat = mat;
+                break;
+            }
+            materialIndex++;
+        }
+        //timeColor = timeIndicator.color;
         currentTime = maxTime;
         buildTmp = buildUp.GetComponent<TMP_Text>();
         punchTmp1 = punchline1.GetComponent<TMP_Text>();
@@ -32,8 +44,9 @@ public class JokeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeColor.a = maxTime - currentTime;
-        timeIndicator.color = timeColor;
+        
+        //timeColor.a -= timeColor.a * 0.1f;
+        //timeIndicator.color = timeColor;
         if(currentTime > 0)
         {
             currentTime -= Time.deltaTime;
@@ -43,6 +56,7 @@ public class JokeController : MonoBehaviour
             //timeColor.a = 0;
             if(maxTime > 0) 
             {
+                //timeColor.a = 0;
                 Debug.Log("Booo!");
                 if (buildUps.Count > 0)
                 {
