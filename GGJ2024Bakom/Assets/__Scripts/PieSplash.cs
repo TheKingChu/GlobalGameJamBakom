@@ -6,21 +6,40 @@ public class PieSplash : MonoBehaviour
 {
     public GameObject pieSplashPrefab;
     private float destroyDelay = 2.0f;
+    private LaughMeter laughMeter;
+
+    private bool hasHitAudience = false;
+    private bool hasTriggeredNegativeEvent = false;
+
+    public void Start()
+    {
+        laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Audience"))
+        if (other.CompareTag("Audience") && !hasHitAudience)
         {
             PlaySplashEffect(transform.position);
             Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
+            laughMeter.PositiveEvent();
+            hasHitAudience = true;
+
             Destroy(gameObject, destroyDelay);
         }
-        else if(other.CompareTag("ground"))
+        else if(other.CompareTag("ground") && !hasHitAudience && !hasTriggeredNegativeEvent)
         {
-            Destroy(gameObject, 0.2f);
+            laughMeter.NegativeEvent();
+            hasTriggeredNegativeEvent = true;
+            Destroy(gameObject, 0.5f);
+        }
+        else if (other.CompareTag("King") && !hasHitAudience && !hasTriggeredNegativeEvent)
+        {
+            laughMeter.NegativeEvent();
+            hasTriggeredNegativeEvent = true;
         }
     }
 

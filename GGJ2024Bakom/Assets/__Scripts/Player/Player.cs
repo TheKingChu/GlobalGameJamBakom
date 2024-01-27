@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public Transform firstPersonCamera;
     public Transform thirdPersonCamera;
     public float transitionSpeed = 5.0f;
+    private bool isFirstPerson = false;
 
     [Header("Pie variables")]
     public GameObject piePrefab;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     public float maxChargeTime = 3.0f;
     public float throwSpeed = 10.0f;
     public float chestHeightOffset = 1.3f;
+    private bool isThrowing = false;
 
     public LineRenderer lineRenderer;
     [SerializeField, Min(3)] int lineSegments = 10;
@@ -89,6 +91,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
+            isThrowing = true;
             GameObject pieInstance = Instantiate(piePrefab, transform.position + transform.forward, Quaternion.identity);
             Rigidbody pieRb = pieInstance.GetComponent<Rigidbody>();
 
@@ -96,11 +99,18 @@ public class Player : MonoBehaviour
             Vector3 throwDirection = transform.forward;
             Vector3 throwVelocity = throwDirection * throwForce;
 
+            throwVelocity += Vector3.up * 0.5f;
+
             pieRb.velocity = throwVelocity;
 
             pieInstance.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
             
             chargeTime = 0f;
+            SetCameraState(false);
+        }
+        if(isThrowing && !Input.GetMouseButton(0))
+        {
+            isThrowing = false;
             SetCameraState(false);
         }
     }
@@ -129,6 +139,8 @@ public class Player : MonoBehaviour
 
     private void SetCameraState(bool isFirstPerson)
     {
+        this.isFirstPerson = isFirstPerson;
+
         if (isFirstPerson)
         {
             // Set first-person camera position and rotation
@@ -141,7 +153,7 @@ public class Player : MonoBehaviour
             float clampedXRotation = Mathf.Clamp(currentXRotation + mouseY, -45f, 45f);
             Camera.main.transform.rotation = Quaternion.Euler(clampedXRotation, Camera.main.transform.rotation.eulerAngles.y, Camera.main.transform.rotation.eulerAngles.z);
         }
-        else
+        else if(!isFirstPerson)
         {
             // Set third-person camera position and rotation
             Camera.main.transform.position = thirdPersonCamera.position;

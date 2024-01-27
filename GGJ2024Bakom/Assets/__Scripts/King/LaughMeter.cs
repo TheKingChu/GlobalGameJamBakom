@@ -6,21 +6,34 @@ using UnityEngine.UI;
 public class LaughMeter : MonoBehaviour
 {
     public Slider laughSlider;
+    public float positiveIncrement = 0.5f;
+    public float negativeIncrement = 0.5f;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PositiveEvent()
     {
-        
+        laughSlider.value += positiveIncrement;
+        Debug.Log("positive");
+
+        if(laughSlider.value > 0.5f)
+        {
+            //something
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void NegativeEvent()
     {
-        UpdateLaughMeter();
+        laughSlider.value -= negativeIncrement;
+        Debug.Log("Negattive");
+
+        if(laughSlider.value < 0.5f)
+        {
+            //something
+        }   
     }
 
-    public void UpdateLaughMeter()
+    public void HonkEvent()
     {
-        float sliderValue = laughSlider.value;
+        laughSlider.value = 0.3f;
+        Debug.Log("honk event");
     }
 }
