@@ -15,28 +15,14 @@ public class Joke : MonoBehaviour
         jester = GameObject.Find("JokeController").GetComponent<JokeController>();
         _myButton = GetComponent<Button>();
     }
-    public void JokeValue()
+
+    public void TellJoke()
     {
-        if (correctJoke)
-        {
-            Debug.Log("Good Joke");
-        }
-        else
-        {
-            Debug.Log("Bad Joke");
-            jester.TimeReduction();
-        }
-
-        if (criticalHonk)
-        {
-            Debug.Log("Critical Honk!");
-            jester.maxTime += 1f;
-        }
-        jester.NextJoke();
-
+        jester.Joking(this.GetComponent<Joke>());
         if (EventSystem.current.currentSelectedGameObject == _myButton.gameObject)
         {
             EventSystem.current.SetSelectedGameObject(null);
         }
+
     }
 }

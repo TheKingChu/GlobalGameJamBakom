@@ -3,26 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class JokeController : MonoBehaviour
 {
     public List<string> buildUps, punchlineList1, punchlineList2, punchlineList3, punchlineList4;
-    public Joke joke1, joke2, joke3, joke4;
+    public List<int> critHonkIndex;
+    public Joke joke1, joke2, joke3, joke4, tellingJoke;
     public GameObject buildUp, punchline1, punchline2, punchline3, punchline4, jesterHead;
-    public float maxTime = 60f, timePunish = 1f;
+    
+    public float maxTime = 60f, timePunish = 1f, pauseTime = 3f;
+    public AudioSource backMusic, honk, laugh, boo;
+    public bool isHonk = false, dramaPause;
+
+
+    public Material faceMat;
+
     private int jokeIndex = 0;
     private string punch1, punch2, punch3, punch4;
     private TMP_Text buildTmp, punchTmp1, punchTmp2, punchTmp3, punchTmp4;
     private GameObject b1, b2, b3, b4;
-    public Material faceMat;
     private Color faceColor;
     private Color colorSave;
-    private float colorChange = 0f, currentTime;
+    private float colorChange = 0f, currentTime, pausing;
+    private bool critHonk = false;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        dramaPause = false;
+        pausing = pauseTime;
+        backMusic.Play();
         b1 = joke1.gameObject;
         b2 = joke2.gameObject;
         b3 = joke3.gameObject;
@@ -47,6 +59,7 @@ public class JokeController : MonoBehaviour
         punchTmp3 = punchline3.GetComponent<TMP_Text>();
         punchTmp4 = punchline4.GetComponent<TMP_Text>();
         NextJoke();
+        tellingJoke = joke1;
     }
 
     // Update is called once per frame
@@ -79,26 +92,82 @@ public class JokeController : MonoBehaviour
                 {
                     maxTime = 0f;
                     currentTime = 0f;
+                    backMusic.Stop();
                 }
             }
             else
             {
-                buildTmp.text = "That's all folks!";
+                buildTmp.text = "Please spare me!";
                 b1.SetActive(false);
                 b2.SetActive(false);
                 b3.SetActive(false);
                 b4.SetActive(false);
+                backMusic.Stop();
             }
-            
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Honk();
+        }
+        if(dramaPause)
+        {
+            currentTime = maxTime;
+            if(pausing > 0f)
+            {
+                pausing -= Time.deltaTime;
+            }
+            else
+            {
+                if (tellingJoke.correctJoke)
+                {
+                    Debug.Log("Good Joke");
+                    laugh.Play();
+                }
+                else if (tellingJoke.criticalHonk)
+                {
+                    if (isHonk)
+                    {
+                        Debug.Log("Critical Honk!");
+                        maxTime += timePunish / 2;
+                        backMusic.pitch -= timePunish / maxTime / 2;
+                        boo.pitch -= timePunish / maxTime / 2;
+                        laugh.pitch -= timePunish / maxTime / 2;
+                        laugh.Play();
+                    }
+                    else
+                    {
+                        Debug.Log("Bad Joke");
+                        TimeReduction();
+                    }
+                }
+                else
+                {
+                    Debug.Log("Bad Joke");
+                    TimeReduction();
+                }
+                NextJoke();
+                backMusic.Play();
+                dramaPause = false;
+                pausing = pauseTime;
+            }
         }
     }
 
     public void NextJoke()
     {
+        isHonk = false;
         if (buildUps.Count > 0)
         {
             jokeIndex = Random.Range(0, buildUps.Count);
             string build = buildUps[jokeIndex];
+            if (critHonkIndex.Contains(jokeIndex))
+            {
+                critHonk = true;
+            }
+            else
+            {
+                critHonk = false;
+            }
             buildTmp.text = build;
             buildUps.Remove(build);
             int i = Random.Range(0, 4);
@@ -108,6 +177,7 @@ public class JokeController : MonoBehaviour
                 joke2.correctJoke = false;
                 joke3.correctJoke = false;
                 joke4.correctJoke = false;
+                joke4.criticalHonk = critHonk;
                 punch1 = punchlineList1[jokeIndex];
                 punch2 = punchlineList2[jokeIndex];
                 punch3 = punchlineList3[jokeIndex];
@@ -123,6 +193,7 @@ public class JokeController : MonoBehaviour
                 joke2.correctJoke = true;
                 joke3.correctJoke = false;
                 joke4.correctJoke = false;
+                joke4.criticalHonk = critHonk;
                 punch1 = punchlineList2[jokeIndex];
                 punch2 = punchlineList1[jokeIndex];
                 punch3 = punchlineList3[jokeIndex];
@@ -138,6 +209,7 @@ public class JokeController : MonoBehaviour
                 joke2.correctJoke = false;
                 joke3.correctJoke = true;
                 joke4.correctJoke = false;
+                joke4.criticalHonk = critHonk;
                 punch1 = punchlineList3[jokeIndex];
                 punch2 = punchlineList2[jokeIndex];
                 punch3 = punchlineList1[jokeIndex];
@@ -150,6 +222,7 @@ public class JokeController : MonoBehaviour
             else if(i == 3)
             {
                 joke1.correctJoke = false;
+                joke1.criticalHonk = critHonk;
                 joke2.correctJoke = false;
                 joke3.correctJoke = false;
                 joke4.correctJoke = true;
@@ -183,5 +256,35 @@ public class JokeController : MonoBehaviour
     public void TimeReduction()
     {
         maxTime -= timePunish;
+        backMusic.pitch += timePunish / maxTime;
+        boo.pitch += timePunish / maxTime;
+        laugh.pitch += timePunish / maxTime;
+        boo.Play();
+    }
+
+    private void Honk()
+    {
+        honk.Play();
+        isHonk = true;
+    }
+
+    IEnumerator PunchlineCoroutine()
+    {
+        //Print the time of when the function is first called.
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 3 seconds.
+        yield return new WaitForSeconds(5);
+
+        //After we have waited 5 seconds print the time again.
+        //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+    public void Joking(Joke told)
+    {
+        tellingJoke = told;
+        isHonk = false;
+        backMusic.Pause();
+        dramaPause = true;
     }
 }
