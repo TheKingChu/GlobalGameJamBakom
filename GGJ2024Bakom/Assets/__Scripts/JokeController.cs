@@ -32,7 +32,7 @@ public class JokeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeColor.a = maxTime;
+        timeColor.a = maxTime - currentTime;
         timeIndicator.color = timeColor;
         if(currentTime > 0)
         {
