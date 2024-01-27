@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class JokeController : MonoBehaviour
 {
     public List<string> buildUps, punchlineList1, punchlineList2, punchlineList3, punchlineList4;
     public Joke joke1, joke2, joke3, joke4;
     public GameObject buildUp, punchline1, punchline2, punchline3, punchline4;
+    public float currentTime;
     public float maxTime = 60;
     private int jokeIndex = 0;
-    public float currentTime;
     private string punch1, punch2, punch3, punch4;
     private TMP_Text buildTmp, punchTmp1, punchTmp2, punchTmp3, punchTmp4;
+    public Image timeIndicator;
+    private Color timeColor;
     // Start is called before the first frame update
     void Start()
     {
+        timeColor = timeIndicator.color;
         currentTime = maxTime;
         buildTmp = buildUp.GetComponent<TMP_Text>();
         punchTmp1 = punchline1.GetComponent<TMP_Text>();
@@ -28,13 +32,15 @@ public class JokeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        timeColor.a = maxTime;
+        timeIndicator.color = timeColor;
         if(currentTime > 0)
         {
             currentTime -= Time.deltaTime;
         }
         else
         {
+            //timeColor.a = 0;
             if(maxTime > 0) 
             {
                 Debug.Log("Booo!");
@@ -46,6 +52,7 @@ public class JokeController : MonoBehaviour
                 else
                 {
                     maxTime = 0f;
+                    currentTime = 0f;
                 }
             }
             
