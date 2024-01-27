@@ -12,7 +12,7 @@ public class Joke : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        jester = GameObject.Find("Jester").GetComponent<JokeController>();
+        jester = GameObject.Find("JokeController").GetComponent<JokeController>();
         _myButton = GetComponent<Button>();
     }
     public void JokeValue()
