@@ -6,6 +6,11 @@ TagManager:
   tags:
   - JokeStart
   - Punchline
+  - King
+  - Audience
+  - ground
+  - Pie
+  - Jester
   layers:
   - Default
   - TransparentFX
