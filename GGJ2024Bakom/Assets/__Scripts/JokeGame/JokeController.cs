@@ -13,11 +13,12 @@ public class JokeController : MonoBehaviour
     public GameObject buildUp, punchline1, punchline2, punchline3, punchline4, jesterHead;
     
     public float maxTime = 60f, timePunish = 1f, pauseTime = 3f;
-    public AudioSource backMusic, honk, laugh, boo;
+    public AudioSource backMusic, honk, laugh, boo, win, victory, lose, loseBoo1, loseBoo2, loseBoo3;
     public bool isHonk = false, dramaPause;
 
 
     public Material faceMat;
+    public ParticleSystem confetti;
 
     private int jokeIndex = 0;
     private string punch1, punch2, punch3, punch4;
@@ -26,7 +27,7 @@ public class JokeController : MonoBehaviour
     private Color faceColor;
     private Color colorSave;
     private float colorChange = 0f, currentTime, pausing;
-    private bool critHonk = false;
+    private bool critHonk = false, won = false, lost = false;
     
 
     // Start is called before the first frame update
@@ -65,7 +66,32 @@ public class JokeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(won)
+        {
+            if (!victory.isPlaying)
+            {
+                win.Play();
+                laugh.pitch = 1f;
+                laugh.Play();
+            }
+            if (!win.isPlaying)
+            {
+                victory.Play();
+            }
+            backMusic.Stop();
+        }
+        else if(lost)
+        {
+            if (!lose.isPlaying)
+            {
+                lose.Play();
+                loseBoo1.Play();
+                loseBoo2.Play();
+                loseBoo3.Play();
+            }
+            backMusic.Stop();
+
+        }
         faceMat.SetColor("_Color", faceColor);
         //timeIndicator.color = timeColor;
         if(currentTime > 0)
@@ -92,7 +118,6 @@ public class JokeController : MonoBehaviour
                 {
                     maxTime = 0f;
                     currentTime = 0f;
-                    backMusic.Stop();
                 }
             }
             else
@@ -102,7 +127,7 @@ public class JokeController : MonoBehaviour
                 b2.SetActive(false);
                 b3.SetActive(false);
                 b4.SetActive(false);
-                backMusic.Stop();
+                lost = true;
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
@@ -146,7 +171,7 @@ public class JokeController : MonoBehaviour
                     TimeReduction();
                 }
                 NextJoke();
-                backMusic.Play();
+                backMusic.volume *= 3;
                 dramaPause = false;
                 pausing = pauseTime;
             }
@@ -248,6 +273,8 @@ public class JokeController : MonoBehaviour
             b2.SetActive(false);
             b3.SetActive(false);
             b4.SetActive(false);
+            confetti.Play();
+            won = true;
         }
         currentTime = maxTime;
         faceColor = colorSave;
@@ -256,9 +283,9 @@ public class JokeController : MonoBehaviour
     public void TimeReduction()
     {
         maxTime -= timePunish;
-        backMusic.pitch += timePunish / maxTime;
-        boo.pitch += timePunish / maxTime;
-        laugh.pitch += timePunish / maxTime;
+        backMusic.pitch += timePunish / 10;
+        boo.pitch += timePunish / 10;
+        laugh.pitch += timePunish / 10;
         boo.Play();
     }
 
@@ -284,7 +311,7 @@ public class JokeController : MonoBehaviour
     {
         tellingJoke = told;
         isHonk = false;
-        backMusic.Pause();
+        backMusic.volume /= 3;
         dramaPause = true;
     }
 }
