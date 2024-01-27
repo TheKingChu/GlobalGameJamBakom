@@ -148,6 +148,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctJoke: 0
   criticalHonk: 0
+--- !u!1 &1669943836203753641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3593164750232619175}
+  - component: {fileID: 9000400231218769167}
+  - component: {fileID: 2325644194599414413}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3593164750232619175
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669943836203753641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5.95, y: 5.95, z: 5.95}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6506713038302021928}
+  m_Father: {fileID: 753024103641540464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -667, y: 242}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9000400231218769167
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669943836203753641}
+  m_CullTransparentMesh: 1
+--- !u!114 &2325644194599414413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669943836203753641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.8018868, b: 0.2769106, a: 0.57254905}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3011692853687475441
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,14 +667,14 @@ RectTransform:
   m_GameObject: {fileID: 6415689502386559167}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0481366, y: 1, z: 1}
+  m_LocalScale: {x: 0.13612168, y: 0.12987015, z: 0.12987015}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 753024103641540464}
+  m_Father: {fileID: 3593164750232619175}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -810.89905, y: 380.00037}
+  m_AnchoredPosition: {x: -26.220581, y: 9.870178}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6206311733571806264
@@ -692,7 +768,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -410.37793, w: -154.3711}
+  m_margin: {x: -71.77645, y: -289.63928, z: -456.50024, w: -433.7539}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -898,6 +974,27 @@ MonoBehaviour:
   - What do you call fake noodles?
   - "I drink beer when I'm sick. It cures all my\u2026 "
   - "How did the barber win the race? He did a\u2026"
+  - "I was going to tell you a pizza joke, but it's too\u2026   "
+  - 'When does bread go bad?   '
+  - 'Why shouldn''t you trust stairs?  '
+  - I tried to paint a wheat field.
+  - "A chemist walked into a couch store. He ended up buying\u2026  "
+  - 'What do squirrels watch on TV? '
+  - "I met a giant once. I didn't know what to say, so\u2026 "
+  - "Two kittens had an argument. It was a\u2026 "
+  - Who is the penguin's favorite Aunt?
+  - "Apple is designing a new automatic car. But they're having trouble installing\u2026   "
+  - "The Middle Ages were called the Dark Ages because there were too many\u2026   "
+  - "I once asked an alpaca for a favor. It was\u2026  "
+  - 'What do you use to cut a Roman Emperor''s hair?   '
+  - "Long fairy tales have a tendency to\u2026  "
+  - 'Did you hear about the shocked tree?   '
+  - 'Why was six nervous?   '
+  - "You really shouldn't be intimidated by advanced math\u2026   "
+  - "Towels can\u2019t tell jokes.   "
+  - 'Which part of town do apples avoid?   '
+  - 'Why should you never trust a train?   '
+  - 'I was wondering why the pie was getting bigger. '
   punchlineList1:
   - I noah guy
   - Wine
@@ -905,6 +1002,27 @@ MonoBehaviour:
   - Impastas
   - Ale-ments
   - Shortcut
+  - Cheesy
+  - 'When you yeast expect it  '
+  - 'They''re always up to something  '
+  - 'It turned out grainy.  '
+  - 'A photon '
+  - Nut-flix.
+  - 'I used big words.  '
+  - Cat-astrophe
+  - 'Aunt-Arctica  '
+  - Windows
+  - Knights
+  - No probllama
+  - 'Ceasers  '
+  - Dragon
+  - It was in disbe-leaf
+  - Because seven eight nine
+  - It's easy as pi
+  - They have a dry sense of humor
+  - The seedy part
+  - 'They have loco motives.  '
+  - Then it hit me
   punchlineList2:
   - No? Why?
   - Juce
@@ -912,6 +1030,27 @@ MonoBehaviour:
   - Spagetti
   - Alcohol poisoning
   - Buzzcut
+  - 'Mama mia  '
+  - 'Never, green is good  '
+  - 'They hurt when i fall  '
+  - 'It burnt '
+  - 'A throne  '
+  - Animal planet
+  - I beat him up
+  - Scratching affair
+  - 'Aunt-karen  '
+  - Doors
+  - Days
+  - No response
+  - 'A sharp crown  '
+  - 'End with your head cut off  '
+  - Struck by lightning
+  - It could be beheaded
+  - "It\u2019s just math"
+  - "They can\u2019t talk"
+  - The stem
+  - They can run you over
+  - I honked it bigger
   punchlineList3:
   - I would rather save our King
   - Ale
@@ -919,6 +1058,27 @@ MonoBehaviour:
   - Still noodles?
   - Bad jokes
   - Fast sprint
+  - Good
+  - 'After seven days  '
+  - 'They''re tiresome to walk  '
+  - It washed away
+  - 'A buzzcut  '
+  - 'Mamma mia  '
+  - 'I starred him down  '
+  - Fast sprint
+  - Auntie-Ethel
+  - Wheels
+  - Kings
+  - A bad time
+  - 'A sword  '
+  - 'Be boring  '
+  - Me neither
+  - 'to fall over  '
+  - "Numbers can\u2019t hurt you"
+  - 'They lack the performance skills  '
+  - The part where the thieves are
+  - They are not like a horse and carriage
+  - 'it rose  '
   punchlineList4:
   - "I \u201Chonk\u201D no idea"
   - pee
@@ -926,6 +1086,27 @@ MonoBehaviour:
   - Limp
   - Headlessness
   - Bald move
+  - Much pineapple
+  - 'I don''t eat bread  '
+  - Shortcut
+  - It ended up looking like your mom
+  - 'Your mom  '
+  - 'Squirrel olympics  '
+  - 'I honked him away  '
+  - 'Cat fight  '
+  - Aunt-Alfred
+  - Crenels
+  - Jesters
+  - Spitting in my face
+  - 'Roman scissors  '
+  - 'Make friends along the way  '
+  - 'No? what a shocker  '
+  - never knew if it was upside down
+  - 'Because seven ate nine  '
+  - "they can\u2019t \xABhonk around\xBB"
+  - High town
+  - they will chew chew you up
+  - 'I thought I ate it. '
   joke1: {fileID: 941490068532248892}
   joke2: {fileID: 766040431295842965}
   joke3: {fileID: 2171731340814674837}
@@ -935,9 +1116,10 @@ MonoBehaviour:
   punchline2: {fileID: 4528991509529584702}
   punchline3: {fileID: 3988069913720453016}
   punchline4: {fileID: 6815837912376878636}
-  currentTime: 0
+  jesterHead: {fileID: 5432570053194317873}
   maxTime: 10
-  timeIndicator: {fileID: 2447733104620176239}
+  timePunish: 1
+  faceMat: {fileID: 0}
 --- !u!1 &6815837912376878636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,12 +1285,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6777293718077784952}
   - {fileID: 7097518165448607244}
   - {fileID: 5882937085221357500}
   - {fileID: 6122534960201505368}
   - {fileID: 4720288484304553173}
   - {fileID: 8292297980759949085}
-  - {fileID: 6506713038302021928}
+  - {fileID: 3593164750232619175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1538,3 +1721,98 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &6451250094539678867
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 753024103641540464}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -958.66
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -539.54
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4613616
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8872122
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5286228966989335772, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3477821731311062464, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3069607825051629309, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_Name
+      value: Jester
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_TagString
+      value: Jester
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603246306389932429, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4407187375235809858, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424073627695423409, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+--- !u!1 &5432570053194317873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7862391691550088030, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+  m_PrefabInstance: {fileID: 6451250094539678867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6777293718077784952 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
+  m_PrefabInstance: {fileID: 6451250094539678867}
+  m_PrefabAsset: {fileID: 0}

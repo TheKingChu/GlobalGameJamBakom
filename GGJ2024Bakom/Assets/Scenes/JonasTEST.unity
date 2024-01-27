@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44455174, g: 0.49405366, b: 0.5733364, a: 1}
+  m_IndirectSpecularColor: {r: 0.44455314, g: 0.49405485, b: 0.57333785, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -274,72 +274,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 55.677, y: -9.157, z: 25.96}
---- !u!1001 &767311462
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.34
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.41
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.4613616
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.8872122
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_Name
-      value: Jester
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-      propertyPath: m_TagString
-      value: Jester
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
---- !u!1 &1410905883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7862391691550088030, guid: a3fa052f403cd514989127fd0d8ce981, type: 3}
-  m_PrefabInstance: {fileID: 767311462}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1753890983
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,9 +523,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2965769829705628994, guid: 4692fd67eb2a90b429709b5e51b65e96, type: 3}
-      propertyPath: jesterHead
-      value: 
-      objectReference: {fileID: 1410905883}
+      propertyPath: timePunish
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6961249354602645054, guid: 4692fd67eb2a90b429709b5e51b65e96, type: 3}
       propertyPath: m_Name
       value: JokeCanvas
@@ -610,4 +544,3 @@ SceneRoots:
   - {fileID: 1753890986}
   - {fileID: 295557451944454392}
   - {fileID: 169493245}
-  - {fileID: 767311462}

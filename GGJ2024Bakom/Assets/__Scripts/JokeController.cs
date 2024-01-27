@@ -8,21 +8,25 @@ public class JokeController : MonoBehaviour
 {
     public List<string> buildUps, punchlineList1, punchlineList2, punchlineList3, punchlineList4;
     public Joke joke1, joke2, joke3, joke4;
-    public GameObject buildUp, punchline1, punchline2, punchline3, punchline4;
-    public float currentTime;
-    public float maxTime = 60;
+    public GameObject buildUp, punchline1, punchline2, punchline3, punchline4, jesterHead;
+    public float maxTime = 60f, timePunish = 1f;
     private int jokeIndex = 0;
     private string punch1, punch2, punch3, punch4;
     private TMP_Text buildTmp, punchTmp1, punchTmp2, punchTmp3, punchTmp4;
-    public GameObject jesterHead;
+    private GameObject b1, b2, b3, b4;
     public Material faceMat;
     private Color faceColor;
     private Color colorSave;
-    private float colorChange = 0f;
+    private float colorChange = 0f, currentTime;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        b1 = joke1.gameObject;
+        b2 = joke2.gameObject;
+        b3 = joke3.gameObject;
+        b4 = joke4.gameObject;
         int materialIndex = 0;
         foreach(Material mat in jesterHead.GetComponent<MeshRenderer>().materials)
         {
@@ -53,7 +57,7 @@ public class JokeController : MonoBehaviour
         //timeIndicator.color = timeColor;
         if(currentTime > 0)
         {
-            colorChange = ((maxTime / currentTime) * Time.deltaTime) / 100;
+            colorChange = ((maxTime / currentTime) * Time.deltaTime) / maxTime;
             currentTime -= Time.deltaTime;
             faceColor.r += colorChange;
             faceColor.g -= colorChange;
@@ -68,7 +72,7 @@ public class JokeController : MonoBehaviour
                 Debug.Log("Booo!");
                 if (buildUps.Count > 0)
                 {
-                    maxTime -= 1f;
+                    maxTime -= timePunish;
                     NextJoke();
                 }
                 else
@@ -76,6 +80,14 @@ public class JokeController : MonoBehaviour
                     maxTime = 0f;
                     currentTime = 0f;
                 }
+            }
+            else
+            {
+                buildTmp.text = "That's all folks!";
+                b1.SetActive(false);
+                b2.SetActive(false);
+                b3.SetActive(false);
+                b4.SetActive(false);
             }
             
         }
@@ -159,10 +171,10 @@ public class JokeController : MonoBehaviour
         else
         {
             buildTmp.text = "That's all folks!";
-            punchTmp1.text = "";
-            punchTmp2.text = "";
-            punchTmp3.text = "";
-            punchTmp4.text = "";
+            b1.SetActive(false);
+            b2.SetActive(false);
+            b3.SetActive(false);
+            b4.SetActive(false);
         }
         currentTime = maxTime;
         faceColor = colorSave;
