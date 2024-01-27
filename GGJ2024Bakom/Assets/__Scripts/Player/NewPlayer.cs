@@ -27,10 +27,6 @@ public class Player : MonoBehaviour
     public float chestHeightOffset = 1.3f;
     private bool isThrowing = false;
 
-    public LineRenderer lineRenderer;
-    [SerializeField, Min(3)] int lineSegments = 10;
-    [SerializeField, Min(1)] float timeOfFlight = 5f;
-
     //animation
     public Animator animator;
 
@@ -92,9 +88,9 @@ public class Player : MonoBehaviour
 
     private void ThrowPie()
     {
-        mouseRotation.MouseMovement();
         if (Input.GetMouseButtonUp(0))
         {
+            mouseRotation.MouseMovement();
             isThrowing = true;
             GameObject pieInstance = Instantiate(piePrefab, transform.position + transform.forward, Quaternion.identity);
             Rigidbody pieRb = pieInstance.GetComponent<Rigidbody>();

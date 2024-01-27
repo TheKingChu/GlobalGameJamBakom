@@ -6,8 +6,8 @@ public class TrajectoryPrediction : MonoBehaviour
 {
     public LineRenderer lineRenderer;
 
-    public int maxIterations = 10000;
-    public int maxSegmentCount = 300;
+    public int maxIterations = 60;
+    public int maxSegmentCount = 10;
     public float segmentStepModulo = 10f;
 
     private Vector3[] segments;
@@ -68,10 +68,8 @@ public class TrajectoryPrediction : MonoBehaviour
 
     private void Draw()
     {
-        Color startColor = Color.magenta;
-        Color endColor = Color.magenta;
-        startColor.a = 1f;
-        endColor.a = 1f;
+        Color startColor = Color.white;
+        Color endColor = Color.red;
 
         lineRenderer.transform.position = segments[0];
 
