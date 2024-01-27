@@ -1,14 +1,15 @@
 using UnityEngine;
 
-namespace __Scripts.Player
+namespace __Scripts.SebastianPlayer
 {
-    public class Player : MonoBehaviour
+    public class SebastianPlayer : MonoBehaviour
     {
         //player movement
         private CharacterController characterController;
         private Vector3 playerVelocity;
         private float playerSpeed = 5.0f;
-
+        //animation
+        private Animator animator; // Add this line
         //
         private Camera mainCamera;
 
@@ -26,6 +27,7 @@ namespace __Scripts.Player
         {
             characterController = GetComponent<CharacterController>();
             mainCamera = Camera.main;
+            animator = GetComponent<Animator>()
         }
 
         // Update is called once per frame
@@ -34,7 +36,18 @@ namespace __Scripts.Player
             PlayerMovement();
             Honk();
             ThrowPie();
+            TriggerAnimation(); // Add this line
         }
+        
+        // Add this method
+        private void TriggerAnimation()
+        {
+            if (Input.GetMouseButtonDown(1)) // 1 represents right mouse button
+            {
+                animator.SetTrigger("YourTriggerName"); // Replace "YourTriggerName" with the name of your trigger
+            }
+        }
+
 
         private void PlayerMovement()
         {
