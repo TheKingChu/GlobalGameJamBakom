@@ -9,6 +9,8 @@ public class LaughMeter : MonoBehaviour
     public float positiveIncrement = 0.5f;
     public float negativeIncrement = 0.5f;
     private Audience audience;
+    public GameObject confettiParticles;
+    public GameObject winPanel, losePanel;
 
     public void PositiveEvent()
     {
@@ -17,7 +19,14 @@ public class LaughMeter : MonoBehaviour
 
         if(laughSlider.value > 0.5f)
         {
-            //something
+            //confetti
+            Instantiate(confettiParticles, transform.position, Quaternion.identity);
+        }
+        if(laughSlider.value == 10)
+        {
+            winPanel.SetActive(true);
+            Time.timeScale = 0;
+            //stop player movement
         }
     }
 
@@ -29,8 +38,14 @@ public class LaughMeter : MonoBehaviour
         if(laughSlider.value < 0.5f)
         {
             //audience starts throwing 
-            audience.ThrowTomato();
+            //audience.ThrowTomato();
         }   
+        if(laughSlider.value == -10)
+        {
+            losePanel.SetActive(true);
+            Time.timeScale = 0;
+            //stop player movement
+        }
     }
 
     public void HonkEvent()
