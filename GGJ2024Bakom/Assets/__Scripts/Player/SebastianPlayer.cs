@@ -8,8 +8,6 @@ namespace __Scripts.SebastianPlayer
         private CharacterController characterController;
         private Vector3 playerVelocity;
         private float playerSpeed = 5.0f;
-        //animation
-        private Animator animator; // Add this line
         //
         private Camera mainCamera;
 
@@ -17,7 +15,6 @@ namespace __Scripts.SebastianPlayer
         public AudioSource honkClip;
 
         //pie
-        public GameObject piePrefab;
         private bool hasPie;
 
         //animation
@@ -27,7 +24,6 @@ namespace __Scripts.SebastianPlayer
         {
             characterController = GetComponent<CharacterController>();
             mainCamera = Camera.main;
-            animator = GetComponent<Animator>()
         }
 
         // Update is called once per frame
@@ -36,17 +32,9 @@ namespace __Scripts.SebastianPlayer
             PlayerMovement();
             Honk();
             ThrowPie();
-            TriggerAnimation(); // Add this line
         }
         
-        // Add this method
-        private void TriggerAnimation()
-        {
-            if (Input.GetMouseButtonDown(1)) // 1 represents right mouse button
-            {
-                animator.SetTrigger("YourTriggerName"); // Replace "YourTriggerName" with the name of your trigger
-            }
-        }
+
 
 
         private void PlayerMovement()
@@ -76,7 +64,6 @@ namespace __Scripts.SebastianPlayer
         {
             if (Input.GetMouseButton(0) && !hasPie)
             {
-                Instantiate(piePrefab);
                 hasPie = true;
             }
         }
