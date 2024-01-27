@@ -11,9 +11,13 @@ public class PieSplash : MonoBehaviour
     private bool hasHitAudience = false;
     private bool hasTriggeredNegativeEvent = false;
 
+    //SFX
+    private AudioSource splashSound;
+
     public void Start()
     {
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
+        splashSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,6 +45,8 @@ public class PieSplash : MonoBehaviour
             laughMeter.NegativeEvent();
             hasTriggeredNegativeEvent = true;
         }
+
+        splashSound.Play();
     }
 
     private void PlaySplashEffect(Vector3 position)

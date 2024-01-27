@@ -11,6 +11,8 @@ TagManager:
   - ground
   - Pie
   - Jester
+  - PointA
+  - PointB
   layers:
   - Default
   - TransparentFX
