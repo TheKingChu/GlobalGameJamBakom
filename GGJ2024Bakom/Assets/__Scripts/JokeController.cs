@@ -16,8 +16,10 @@ public class JokeController : MonoBehaviour
     private TMP_Text buildTmp, punchTmp1, punchTmp2, punchTmp3, punchTmp4;
     public GameObject jesterHead;
     public Material faceMat;
-    //public Image timeIndicator;
     private Color faceColor;
+    private Color colorSave;
+    private float colorChange = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,8 @@ public class JokeController : MonoBehaviour
             }
             materialIndex++;
         }
+        faceColor = faceMat.color;
+        colorSave = faceColor;
         //timeColor = timeIndicator.color;
         currentTime = maxTime;
         buildTmp = buildUp.GetComponent<TMP_Text>();
@@ -45,18 +49,22 @@ public class JokeController : MonoBehaviour
     void Update()
     {
         
-        //timeColor.a -= timeColor.a * 0.1f;
+        faceMat.SetColor("_Color", faceColor);
         //timeIndicator.color = timeColor;
         if(currentTime > 0)
         {
+            colorChange = ((maxTime / currentTime) * Time.deltaTime) / 100;
             currentTime -= Time.deltaTime;
+            faceColor.r += colorChange;
+            faceColor.g -= colorChange;
+            faceColor.b -= colorChange;
         }
         else
         {
+            faceColor = colorSave;
             //timeColor.a = 0;
-            if(maxTime > 0) 
+            if (maxTime > 0) 
             {
-                //timeColor.a = 0;
                 Debug.Log("Booo!");
                 if (buildUps.Count > 0)
                 {
@@ -157,5 +165,6 @@ public class JokeController : MonoBehaviour
             punchTmp4.text = "";
         }
         currentTime = maxTime;
+        faceColor = colorSave;
     }
 }
