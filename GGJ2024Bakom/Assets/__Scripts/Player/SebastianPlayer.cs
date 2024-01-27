@@ -15,22 +15,6 @@ public class SebastianPlayer : MonoBehaviour
 
     //pie
     public GameObject piePrefab;
-    private bool hasPie;
-
-    //animation
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //player movement
-        private CharacterController characterController;
-        private Vector3 playerVelocity;
-        private float playerSpeed = 5.0f;
-        //
-        private Camera mainCamera;
-
-        //sounds
-        public AudioSource honkClip;
 
         //pie
         private bool hasPie;
@@ -48,8 +32,6 @@ public class SebastianPlayer : MonoBehaviour
         void Update()
         {
             PlayerMovement();
-            Honk();
-            ThrowPie();
         }
         
 
@@ -77,24 +59,5 @@ public class SebastianPlayer : MonoBehaviour
         float verticalMove = Input.GetAxis("Mouse Y");
         transform.Rotate(-verticalMove, 0, 0);
     }
-
-    private void ThrowPie()
-    {
-        if (Input.GetMouseButton(0) && !hasPie)
-        {
-            if (Input.GetMouseButton(0) && !hasPie)
-            {
-                hasPie = true;
-            }
-        }
-    }
-
-    public void Honk()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("HONK");
-            honkClip.Play();
-        }
-    }
+    
 }
