@@ -15,6 +15,7 @@ public class JugglingHandler : MonoBehaviour
     private int counter = 0; // Counter to keep track of the number of bounces
 
     public GameObject pausePanel;
+    public GameObject infoPanel;
     private SebastianPlayer playerController;
 
     private enum Stages
@@ -33,6 +34,8 @@ public class JugglingHandler : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         playerController = GetComponent<SebastianPlayer>();
         pausePanel.SetActive(false);
+        playerController.enabled = false;
+        Time.timeScale = 0;
     }
     
     // Method to play an audio clip
@@ -53,6 +56,13 @@ public class JugglingHandler : MonoBehaviour
     {
         handleStages();
         handleMouseClick();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            infoPanel.SetActive(false);
+            Time.timeScale = 1f;
+            playerController.enabled = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
