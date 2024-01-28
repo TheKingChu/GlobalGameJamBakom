@@ -13,6 +13,10 @@ public class JugglingHandler : MonoBehaviour
     public float bounceForce = 10f; // Force to apply when bouncing
     public float maxDistance = 0.1f; // Maximum distance for the sphere to be considered "close" to the hand
     private int counter = 0; // Counter to keep track of the number of bounces
+
+    public GameObject pausePanel;
+    private SebastianPlayer playerController;
+
     private enum Stages
     {
         Easy,
@@ -21,14 +25,14 @@ public class JugglingHandler : MonoBehaviour
     }
     private Stages stage = Stages.Easy; // Current stage of the game
     
-    void start()
+    void Start()
     {
         Debug.LogWarning("test start");
         
         // Play background music
         audioSource = GetComponent<AudioSource>();
-        
-
+        playerController = GetComponent<SebastianPlayer>();
+        pausePanel.SetActive(false);
     }
     
     // Method to play an audio clip
@@ -49,6 +53,15 @@ public class JugglingHandler : MonoBehaviour
     {
         handleStages();
         handleMouseClick();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0;
+            playerController.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
     
     void handleMouseClick()
