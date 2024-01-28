@@ -10,7 +10,7 @@ public class JokeController : MonoBehaviour
     public List<string> buildUps, punchlineList1, punchlineList2, punchlineList3, punchlineList4;
     public List<int> critHonkIndex;
     public Joke joke1, joke2, joke3, joke4, tellingJoke;
-    public GameObject buildUp, punchline1, punchline2, punchline3, punchline4, jesterHead;
+    public GameObject buildUp, punchline1, punchline2, punchline3, punchline4, jesterHead, king, headRoll, mainCam, jesting;
     
     public float maxTime = 60f, timePunish = 1f, pauseTime = 3f;
     public AudioSource backMusic, honk, laugh, boo, win, victory, lose, loseBoo1, loseBoo2, loseBoo3;
@@ -28,6 +28,8 @@ public class JokeController : MonoBehaviour
     private Color colorSave;
     private float colorChange = 0f, currentTime, pausing;
     private bool critHonk = false, won = false, lost = false;
+    public Animator jestingAnim, headRollAnim, kingAnim;
+    
     
 
     // Start is called before the first frame update
@@ -41,7 +43,7 @@ public class JokeController : MonoBehaviour
         b3 = joke3.gameObject;
         b4 = joke4.gameObject;
         int materialIndex = 0;
-        foreach(Material mat in jesterHead.GetComponent<MeshRenderer>().materials)
+        foreach(Material mat in jesterHead.GetComponent<SkinnedMeshRenderer>().materials)
         {
             if(materialIndex == 1)
             {
@@ -61,6 +63,9 @@ public class JokeController : MonoBehaviour
         punchTmp4 = punchline4.GetComponent<TMP_Text>();
         NextJoke();
         tellingJoke = joke1;
+        jestingAnim = jesting.GetComponent<Animator>();
+        headRollAnim = headRoll.GetComponent<Animator>();
+        kingAnim = king.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -68,13 +73,21 @@ public class JokeController : MonoBehaviour
     {
         if(won)
         {
+            if (kingAnim.GetCurrentAnimatorStateInfo(0).IsName("Laugh"))
+            {
+                if (kingAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
+                }
+            }
             if (!victory.isPlaying)
             {
+                
+            kingAnim.SetBool("Laugh", true);
                 win.Play();
                 laugh.pitch = 1f;
                 laugh.Play();
             }
-            if (!win.isPlaying)
+            if (!win.isPlaying && !victory.isPlaying)
             {
                 victory.Play();
             }
@@ -82,6 +95,7 @@ public class JokeController : MonoBehaviour
         }
         else if(lost)
         {
+
             if (!lose.isPlaying)
             {
                 lose.Play();
@@ -91,10 +105,27 @@ public class JokeController : MonoBehaviour
             }
             backMusic.Stop();
 
+            if (!headRoll.activeSelf)
+            {
+                kingAnim.SetBool("Kill", true);
+                if (kingAnim.GetCurrentAnimatorStateInfo(0).IsName("Kill"))
+                {
+                    if (kingAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                    {
+                        headRoll.SetActive(true);
+                        mainCam.SetActive(false);
+                        jesting.SetActive(false);
+                    }
+                }
+
+            }
+
+            
+
         }
         faceMat.SetColor("_Color", faceColor);
         //timeIndicator.color = timeColor;
-        if(currentTime > 0)
+        if(currentTime > 0 && !won && !lost)
         {
             colorChange = ((maxTime / currentTime) * Time.deltaTime) / maxTime;
             currentTime -= Time.deltaTime;
@@ -134,46 +165,53 @@ public class JokeController : MonoBehaviour
         {
             Honk();
         }
-        if(dramaPause)
+        if (dramaPause)
         {
             currentTime = maxTime;
-            if(pausing > 0f)
+            if (jestingAnim.GetCurrentAnimatorStateInfo(0).IsName("Punchline") && jestingAnim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f && dramaPause)
             {
-                pausing -= Time.deltaTime;
+                backMusic.Pause();
             }
-            else
-            {
+            else if (jestingAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && dramaPause)
+            { 
+                dramaPause = false;
+
+                jestingAnim.SetBool("Punchline", false);
+
                 if (tellingJoke.correctJoke)
-                {
-                    Debug.Log("Good Joke");
-                    laugh.Play();
-                }
-                else if (tellingJoke.criticalHonk)
-                {
-                    if (isHonk)
                     {
-                        Debug.Log("Critical Honk!");
-                        maxTime += timePunish / 2;
-                        backMusic.pitch -= timePunish / maxTime / 2;
-                        boo.pitch -= timePunish / maxTime / 2;
-                        laugh.pitch -= timePunish / maxTime / 2;
+                        Debug.Log("Good Joke");
                         laugh.Play();
+                        NextJoke();
+                    }
+                    else if (tellingJoke.criticalHonk)
+                    {
+                        if (isHonk)
+                        {
+                            Debug.Log("Critical Honk!");
+                            maxTime += timePunish / 2;
+                            backMusic.pitch -= timePunish / maxTime / 2;
+                            boo.pitch -= timePunish / maxTime / 2;
+                            laugh.pitch -= timePunish / maxTime / 2;
+                            laugh.Play();
+                            NextJoke();
+                        }
+                        else
+                        {
+                            Debug.Log("Bad Joke");
+                            TimeReduction();
+                            NextJoke();
+                        }
                     }
                     else
                     {
                         Debug.Log("Bad Joke");
                         TimeReduction();
+                        NextJoke();
                     }
-                }
-                else
-                {
-                    Debug.Log("Bad Joke");
-                    TimeReduction();
-                }
-                NextJoke();
-                backMusic.volume *= 3;
-                dramaPause = false;
-                pausing = pauseTime;
+                    backMusic.volume *= 3;
+                    pausing = pauseTime;
+                
             }
         }
     }
@@ -277,6 +315,7 @@ public class JokeController : MonoBehaviour
             won = true;
         }
         currentTime = maxTime;
+        jestingAnim.SetFloat("Nervousness", maxTime);
         faceColor = colorSave;
     }
 
@@ -313,5 +352,6 @@ public class JokeController : MonoBehaviour
         isHonk = false;
         backMusic.volume /= 3;
         dramaPause = true;
+        jestingAnim.SetBool("Punchline", true);
     }
 }
