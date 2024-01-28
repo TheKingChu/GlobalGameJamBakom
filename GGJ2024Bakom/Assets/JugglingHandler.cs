@@ -35,6 +35,8 @@ public class JugglingHandler : MonoBehaviour
         playerController = GetComponent<SebastianPlayer>();
         pausePanel.SetActive(false);
         playerController.enabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 0;
     }
     
