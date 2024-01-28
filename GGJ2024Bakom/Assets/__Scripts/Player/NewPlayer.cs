@@ -12,6 +12,8 @@ public class NewPlayer : MonoBehaviour
     //sounds
     public AudioSource honkClip;
 
+    private LaughMeter laughMeter;
+
     [Header("Camera variables")]
     public float transitionSpeed = 5.0f;
     private bool isFirstPerson = false;
@@ -26,6 +28,7 @@ public class NewPlayer : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         mouseRotation = GetComponentInChildren<MouseRotation>();
+        laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
     }
 
     // Update is called once per frame
@@ -64,8 +67,8 @@ public class NewPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("HONK");
             honkClip.Play();
+            laughMeter.HonkEvent();
         }
     }
 }

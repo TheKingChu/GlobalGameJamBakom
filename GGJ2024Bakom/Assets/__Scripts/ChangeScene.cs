@@ -17,12 +17,17 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
+    //Pie throwing mini game
     public void PieThrowing()
     {
         SceneManager.LoadScene(1);
     }
 
-    //Pie throwing mini game
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 
     //Quit game button
     public void QuitGame()

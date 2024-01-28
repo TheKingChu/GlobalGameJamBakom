@@ -12,12 +12,11 @@ public class PieSplash : MonoBehaviour
     private bool hasTriggeredNegativeEvent = false;
 
     //SFX
-    private AudioSource splashSound;
+    public AudioSource splashSound, booSound, laughterSound;
 
     public void Start()
     {
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
-        splashSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,11 +24,16 @@ public class PieSplash : MonoBehaviour
         if (other.CompareTag("Audience") || other.CompareTag("Jester") && !hasHitAudience)
         {
             PlaySplashEffect(transform.position);
+            splashSound.Play();
+
             Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
+
             laughMeter.PositiveEvent();
+            laughterSound.Play();
             hasHitAudience = true;
 
             Destroy(gameObject, destroyDelay);
@@ -37,26 +41,37 @@ public class PieSplash : MonoBehaviour
         else if(other.CompareTag("ground") || other.CompareTag("Wall") && !hasHitAudience && !hasTriggeredNegativeEvent)
         {
             PlaySplashEffect(transform.position);
+            splashSound.Play();
+
             Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
+
             laughMeter.NegativeEvent();
+            booSound.Play();
             hasTriggeredNegativeEvent = true;
+
             Destroy(gameObject, 0.5f);
         }
         else if (other.CompareTag("King") && !hasHitAudience && !hasTriggeredNegativeEvent)
         {
             PlaySplashEffect(transform.position);
+            splashSound.Play();
+
             Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
+
             laughMeter.NegativeEvent();
+            booSound.Play();
             hasTriggeredNegativeEvent = true;
+            Destroy(gameObject, destroyDelay);
         }
 
-        splashSound.Play();
     }
 
     private void PlaySplashEffect(Vector3 position)

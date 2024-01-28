@@ -6,6 +6,8 @@ public class MouseRotation : MonoBehaviour
 {
     private Vector2 turn;
     public float mouseSensitivity = 1.0f;
+    private bool allowMovement = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +18,14 @@ public class MouseRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MouseMovement();
+        if (allowMovement)
+        {
+            MouseMovement();
+        }
+        else
+        {
+            StopMouseMovement();
+        }
     }
 
     public void MouseMovement()
@@ -29,6 +38,6 @@ public class MouseRotation : MonoBehaviour
 
     public void StopMouseMovement()
     {
-
+        allowMovement = false;
     }
 }

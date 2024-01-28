@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TrajectoryPrediction : MonoBehaviour
 {
+    [Header("Trajectory and arc variables")]
     public float arcHeight = 2f;
     public int resolution = 10;
     public float maxArcLength = 10f;
@@ -17,6 +18,7 @@ public class TrajectoryPrediction : MonoBehaviour
     private float holdStartTime;
 
     public GameObject piePrefab;
+    public AudioSource pieAudioSource;
 
     [Header("Camera variables")]
     public Transform firstPersonCamera;
@@ -106,6 +108,7 @@ public class TrajectoryPrediction : MonoBehaviour
         pieRb.AddForce(throwForce, ForceMode.VelocityChange);
 
         pieInstance.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
+        pieAudioSource.Play();
     }
 
     private void SetCameraState(bool isFirstPerson)
