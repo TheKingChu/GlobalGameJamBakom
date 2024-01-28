@@ -27,14 +27,12 @@ public class TrajectoryPrediction : MonoBehaviour
     bool isFirstPerson;
     private MouseRotation mouseRotation;
 
-    public Animator cameraObj;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = resolution + 1;
         lineRenderer.enabled = false;
-        cameraObj = GetComponent<Animator>();
     }
 
     void Update()
@@ -49,7 +47,6 @@ public class TrajectoryPrediction : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             DrawDynamicArc();
-            cameraObj.SetFloat("shake", 1);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -57,7 +54,6 @@ public class TrajectoryPrediction : MonoBehaviour
             lineRenderer.enabled = false; // Hide the visual line when mouse button is released
             ThrowObject();
             SetCameraState(false);
-            cameraObj.SetFloat("shake", 0);
         }
     }
 

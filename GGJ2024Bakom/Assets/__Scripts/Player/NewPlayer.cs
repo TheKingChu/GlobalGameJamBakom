@@ -24,6 +24,7 @@ public class NewPlayer : MonoBehaviour
 
     //start info
     public GameObject infoPanel;
+    public GameObject pausePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class NewPlayer : MonoBehaviour
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
         mouseRotation.ResumeMovement();
         infoPanel.SetActive(true);
+        pausePanel.SetActive(false);
         Time.timeScale = 0;
     }
 
@@ -46,6 +48,14 @@ public class NewPlayer : MonoBehaviour
         {
             infoPanel.SetActive(false);
             Time.timeScale = 1f;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            pausePanel.SetActive(true);
+            mouseRotation.StopMouseMovement();
+            Time.timeScale = 0;
         }
     }
 
