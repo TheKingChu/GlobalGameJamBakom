@@ -34,14 +34,24 @@ public class PieSplash : MonoBehaviour
 
             Destroy(gameObject, destroyDelay);
         }
-        else if(other.CompareTag("ground") && !hasHitAudience && !hasTriggeredNegativeEvent)
+        else if(other.CompareTag("ground") || other.CompareTag("Wall") && !hasHitAudience && !hasTriggeredNegativeEvent)
         {
+            PlaySplashEffect(transform.position);
+            Rigidbody pieRb = GetComponent<Rigidbody>();
+            pieRb.isKinematic = true;
+            FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = other.GetComponent<Rigidbody>();
             laughMeter.NegativeEvent();
             hasTriggeredNegativeEvent = true;
             Destroy(gameObject, 0.5f);
         }
         else if (other.CompareTag("King") && !hasHitAudience && !hasTriggeredNegativeEvent)
         {
+            PlaySplashEffect(transform.position);
+            Rigidbody pieRb = GetComponent<Rigidbody>();
+            pieRb.isKinematic = true;
+            FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = other.GetComponent<Rigidbody>();
             laughMeter.NegativeEvent();
             hasTriggeredNegativeEvent = true;
         }

@@ -13,6 +13,7 @@ TagManager:
   - Jester
   - PointA
   - PointB
+  - Wall
   layers:
   - Default
   - TransparentFX

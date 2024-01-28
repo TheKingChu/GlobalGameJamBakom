@@ -1,85 +1,126 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TrajectoryPrediction : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
+    public float arcHeight = 2f;
+    public int resolution = 10;
+    public float maxArcLength = 10f;
+    public float minChargeTime = 1f;
+    public float maxChargeTime = 5f;
+    public float minThrowVelocity = 10f;
+    public float maxThrowVelocity = 20f;
 
-    public int maxIterations = 60;
-    public int maxSegmentCount = 10;
-    public float segmentStepModulo = 10f;
+    private LineRenderer lineRenderer;
+    private float holdStartTime;
 
-    private Vector3[] segments;
-    private int numSegments = 0;
+    public GameObject piePrefab;
 
-    public bool Enabled
+    [Header("Camera variables")]
+    public Transform firstPersonCamera;
+    public Transform thirdPersonCamera;
+    public float transitionSpeed = 5.0f;
+    bool isFirstPerson;
+    private MouseRotation mouseRotation;
+
+    void Start()
     {
-        get
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = resolution + 1;
+        lineRenderer.enabled = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            return lineRenderer.enabled;
+            holdStartTime = Time.time;
+            lineRenderer.enabled = true;
+            SetCameraState(true);
         }
-        set
+
+        if (Input.GetMouseButton(0))
         {
-            lineRenderer.enabled = value;
+            DrawDynamicArc();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            lineRenderer.enabled = false; // Hide the visual line when mouse button is released
+            ThrowObject();
+            SetCameraState(false);
         }
     }
 
-    public void Start()
+    void DrawDynamicArc()
     {
-        Enabled = false;
+        float holdDuration = Time.time - holdStartTime;
+        float clampedArcLength = Mathf.Clamp(holdDuration, 0f, maxArcLength);
+        float gravity = Mathf.Abs(Physics.gravity.y);
+
+        Vector3 playerPos = transform.position;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
+        Vector3 direction = (mousePosition - playerPos).normalized;
+
+        int visiblePoints = 50; // Adjust this value based on the desired smoothness
+        float stretchingSpeed = 2.0f; // Adjust this value to control the stretching speed
+
+        lineRenderer.positionCount = visiblePoints;
+
+        for (int i = 0; i < visiblePoints; i++)
+        {
+            float t = i / (float)(visiblePoints - 1);
+            float x = playerPos.x + direction.x * t * clampedArcLength;
+            float y = playerPos.y + Mathf.Sin(t * Mathf.PI) * arcHeight * (1.0f - t * stretchingSpeed); // Adjust the stretching speed
+            float z = playerPos.z + direction.z * t * clampedArcLength;
+
+            Vector3 point = new Vector3(x, y, z);
+            lineRenderer.SetPosition(i, point);
+        }
     }
 
-    public void SimulatePath(GameObject gameObject, Vector3 forceDirection, float mass, float drag)
+    float CalculateThrowVelocity(float chargeTime)
     {
-        Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
-
-        float timestep = Time.fixedDeltaTime;
-
-        float stepDrag = 1 - drag * timestep;
-        Vector3 velocity = forceDirection / mass * timestep;
-        Vector3 gravity = Physics.gravity * timestep * timestep;
-        Vector3 position = gameObject.transform.position + rigidbody.centerOfMass;
-
-        if (segments == null || segments.Length != maxSegmentCount)
-        {
-            segments = new Vector3[maxSegmentCount];
-        }
-
-        segments[0] = position;
-        numSegments = 1;
-
-        for (int i = 0; i < maxIterations && numSegments < maxSegmentCount && position.y > 0f; i++)
-        {
-            velocity += gravity;
-            velocity *= stepDrag;
-
-            position += velocity;
-
-            if (i % segmentStepModulo == 0)
-            {
-                segments[numSegments] = position;
-                numSegments++;
-            }
-        }
-
-        Draw();
+        // Linearly interpolate throw velocity based on charge time
+        float t = Mathf.InverseLerp(minChargeTime, maxChargeTime, chargeTime);
+        return Mathf.Lerp(minThrowVelocity, maxThrowVelocity, t);
     }
 
-    private void Draw()
+    private void ThrowObject()
     {
-        Color startColor = Color.white;
-        Color endColor = Color.red;
+        float holdDuration = Time.time - holdStartTime;
+        float throwVelocity = CalculateThrowVelocity(holdDuration);
+        
+        GameObject pieInstance = Instantiate(piePrefab, transform.position + transform.forward, Quaternion.identity);
+        Rigidbody pieRb = pieInstance.GetComponent<Rigidbody>();
+        
+        Vector3 throwDirection = (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y)) - transform.position).normalized;
 
-        lineRenderer.transform.position = segments[0];
+        // Adjust this factor to control the arc shape and throw velocity
+        float arcFactor = 1.0f;
 
-        lineRenderer.startColor = startColor;
-        lineRenderer.endColor = endColor;
+        // Calculate the throw force using the adjusted arcFactor
+        Vector3 throwForce = throwDirection * throwVelocity * arcFactor;
+        pieRb.AddForce(throwForce, ForceMode.VelocityChange);
 
-        lineRenderer.positionCount = numSegments;
-        for (int i = 0; i < numSegments; i++)
+        pieInstance.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
+    }
+
+    private void SetCameraState(bool isFirstPerson)
+    {
+        this.isFirstPerson = isFirstPerson;
+
+        if (isFirstPerson)
         {
-            lineRenderer.SetPosition(i, segments[i]);
+            // Set first-person camera position and rotation
+            Camera.main.transform.SetPositionAndRotation(firstPersonCamera.position, firstPersonCamera.rotation);
+        }
+        else if (!isFirstPerson)
+        {
+            // Set third-person camera position and rotation
+            Camera.main.transform.SetPositionAndRotation(thirdPersonCamera.position, thirdPersonCamera.rotation);
         }
     }
 }
