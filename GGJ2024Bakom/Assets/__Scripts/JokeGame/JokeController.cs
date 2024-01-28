@@ -66,6 +66,7 @@ public class JokeController : MonoBehaviour
         jestingAnim = jesting.GetComponent<Animator>();
         headRollAnim = headRoll.GetComponent<Animator>();
         kingAnim = king.GetComponent<Animator>();
+        jestingAnim.SetFloat("Nervousness", maxTime);
     }
 
     // Update is called once per frame
@@ -102,24 +103,19 @@ public class JokeController : MonoBehaviour
                 loseBoo1.Play();
                 loseBoo2.Play();
                 loseBoo3.Play();
+                kingAnim.SetBool("Kill", true);
+                headRoll.SetActive(true);
+                mainCam.SetActive(false);
+                jesting.SetActive(false);
             }
             backMusic.Stop();
-
-            if (!headRoll.activeSelf)
+            /*if (kingAnim.GetCurrentAnimatorStateInfo(0).IsName("Kill"))
             {
-                kingAnim.SetBool("Kill", true);
-                if (kingAnim.GetCurrentAnimatorStateInfo(0).IsName("Kill"))
-                {
                     if (kingAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                     {
-                        headRoll.SetActive(true);
-                        mainCam.SetActive(false);
-                        jesting.SetActive(false);
                     }
                 }
-
-            }
-
+            */
             
 
         }
@@ -315,13 +311,13 @@ public class JokeController : MonoBehaviour
             won = true;
         }
         currentTime = maxTime;
-        jestingAnim.SetFloat("Nervousness", maxTime);
         faceColor = colorSave;
     }
 
     public void TimeReduction()
     {
         maxTime -= timePunish;
+        jestingAnim.SetFloat("Nervousness", maxTime);
         backMusic.pitch += timePunish / 10;
         boo.pitch += timePunish / 10;
         laugh.pitch += timePunish / 10;
