@@ -64,8 +64,8 @@ public class TrajectoryPrediction : MonoBehaviour
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
         Vector3 direction = (mousePosition - playerPos).normalized;
 
-        int visiblePoints = 50; // Adjust this value based on the desired smoothness
-        float stretchingSpeed = 2.0f; // Adjust this value to control the stretching speed
+        int visiblePoints = 10; // Adjust this value based on the desired smoothness
+        float stretchingSpeed = 1f; // Adjust this value to control the stretching speed
 
         lineRenderer.positionCount = visiblePoints;
 
@@ -73,7 +73,7 @@ public class TrajectoryPrediction : MonoBehaviour
         {
             float t = i / (float)(visiblePoints - 1);
             float x = playerPos.x + direction.x * t * clampedArcLength;
-            float y = playerPos.y + Mathf.Sin(t * Mathf.PI) * arcHeight * (1.0f - t * stretchingSpeed); // Adjust the stretching speed
+            float y = playerPos.y + arcHeight + arcHeight * (2 * t - 1) * (1.0f - t * stretchingSpeed);
             float z = playerPos.z + direction.z * t * clampedArcLength;
 
             Vector3 point = new Vector3(x, y, z);

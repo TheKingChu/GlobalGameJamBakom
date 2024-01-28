@@ -22,7 +22,7 @@ public class PieSplash : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Audience") && !hasHitAudience)
+        if (other.CompareTag("Audience") || other.CompareTag("Jester") && !hasHitAudience)
         {
             PlaySplashEffect(transform.position);
             Rigidbody pieRb = GetComponent<Rigidbody>();
