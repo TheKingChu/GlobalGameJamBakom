@@ -17,6 +17,8 @@ public class LaughMeter : MonoBehaviour
     private void Start()
     {
         mouseRotation = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MouseRotation>();
+        mouseRotation.ResumeMovement();
+        Time.timeScale = 1f;
     }
 
     public void PositiveEvent()

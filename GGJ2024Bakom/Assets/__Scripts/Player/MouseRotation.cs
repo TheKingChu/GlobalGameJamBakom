@@ -40,4 +40,9 @@ public class MouseRotation : MonoBehaviour
     {
         allowMovement = false;
     }
+
+    public void ResumeMovement()
+    {
+        allowMovement = true;
+    }
 }

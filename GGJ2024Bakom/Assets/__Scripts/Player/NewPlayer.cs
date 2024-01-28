@@ -29,6 +29,7 @@ public class NewPlayer : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         mouseRotation = GetComponentInChildren<MouseRotation>();
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
+        mouseRotation.ResumeMovement();
     }
 
     // Update is called once per frame

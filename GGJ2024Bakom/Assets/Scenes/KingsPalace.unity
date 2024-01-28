@@ -4708,8 +4708,8 @@ MonoBehaviour:
   arcHeight: 1
   resolution: 5
   maxArcLength: 5
-  minChargeTime: 0.1
-  maxChargeTime: 1
+  minChargeTime: 1
+  maxChargeTime: 5
   minThrowVelocity: 5
   maxThrowVelocity: 20
   piePrefab: {fileID: 3853625568302121619, guid: d6f8ce23dd271a04ea3dc3a965cc1e70, type: 3}
@@ -5287,8 +5287,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laughSlider: {fileID: 158867177}
-  positiveIncrement: 0.5
-  negativeIncrement: 0.5
+  positiveIncrement: 1
+  negativeIncrement: 3
   confettiParticles: {fileID: 3805994316277819790, guid: a69495fb9847c994092f3083d4c5b541, type: 3}
   winPanel: {fileID: 52780224}
   losePanel: {fileID: 819806971}
