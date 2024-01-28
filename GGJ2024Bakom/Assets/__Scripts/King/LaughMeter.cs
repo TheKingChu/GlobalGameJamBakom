@@ -18,7 +18,6 @@ public class LaughMeter : MonoBehaviour
     {
         mouseRotation = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MouseRotation>();
         mouseRotation.ResumeMovement();
-        Time.timeScale = 1f;
     }
 
     public void PositiveEvent()
@@ -26,10 +25,11 @@ public class LaughMeter : MonoBehaviour
         laughSlider.value += positiveIncrement;
         Debug.Log("positive");
 
-        if(laughSlider.value > 0.5f)
+        if(laughSlider.value > 2.5f)
         {
             //confetti
             Instantiate(confettiParticles, transform.position, Quaternion.identity);
+
         }
         if(laughSlider.value >= 10)
         {

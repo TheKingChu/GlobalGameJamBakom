@@ -11,12 +11,17 @@ public class PieSplash : MonoBehaviour
     private bool hasHitAudience = false;
     private bool hasTriggeredNegativeEvent = false;
 
+    private Rigidbody pieRb;
+    private Collider sphereCollider;
+
     //SFX
     public AudioSource splashSound, booSound, laughterSound;
 
     public void Start()
     {
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
+        pieRb = GetComponent<Rigidbody>();
+        sphereCollider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,8 +31,8 @@ public class PieSplash : MonoBehaviour
             PlaySplashEffect(transform.position);
             splashSound.Play();
 
-            Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+            sphereCollider.enabled = false;
 
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
@@ -43,8 +48,8 @@ public class PieSplash : MonoBehaviour
             PlaySplashEffect(transform.position);
             splashSound.Play();
 
-            Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+            sphereCollider.enabled = false;
 
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();
@@ -60,8 +65,8 @@ public class PieSplash : MonoBehaviour
             PlaySplashEffect(transform.position);
             splashSound.Play();
 
-            Rigidbody pieRb = GetComponent<Rigidbody>();
             pieRb.isKinematic = true;
+            sphereCollider.enabled = false;
 
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = other.GetComponent<Rigidbody>();

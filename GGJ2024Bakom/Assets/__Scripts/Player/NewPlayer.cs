@@ -22,6 +22,9 @@ public class NewPlayer : MonoBehaviour
     //animation
     public Animator animator;
 
+    //start info
+    public GameObject infoPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,8 @@ public class NewPlayer : MonoBehaviour
         mouseRotation = GetComponentInChildren<MouseRotation>();
         laughMeter = GameObject.FindGameObjectWithTag("King").GetComponent<LaughMeter>();
         mouseRotation.ResumeMovement();
+        infoPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -37,6 +42,11 @@ public class NewPlayer : MonoBehaviour
     {
         PlayerMovement();
         Honk();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            infoPanel.SetActive(false);
+            Time.timeScale = 1f;
+        }
     }
 
     private void PlayerMovement()
