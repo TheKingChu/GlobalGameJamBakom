@@ -1,3 +1,6 @@
+//original by Charlie
+//modified by Sebastian
+
 using UnityEngine;
 public class SebastianPlayer : MonoBehaviour
 {
