@@ -14,3 +14,21 @@
   <li>Unity 3D</li>
   <li>C#</li>
 </ul>
+
+<h3>Mini-games</h3>
+
+ - **Joke Master**
+     > Randomly displays 4 prompts
+     >
+     > Time-based on how well you are doing
+
+ - **Juggling**
+     > LMB for left-hand movement
+     > 
+     > RMB for right-hand movement
+     >
+     > When you are successfully juggling more balls will be thrown at you
+     > so the better you do it the harder it gets
+
+ - **Pie throwing**
+     > Uses trajectory calculations for the pie and the line renderer
